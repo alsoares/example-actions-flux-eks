@@ -32,10 +32,12 @@ jobs:
     - name: Setup ECR
       run: |
         # Teste kubectl
-        $( kubectl version --short )
-
+        curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+        chmod +x ./kubectl
+        sudo mv ./kubectl /usr/local/bin/kubectl
+        kubectl version --client --short
+        
     # Add steps here like linting, testing, minification, etc.
-      
     - name: Setup ECR
       run: |
         # Login to AWS ECR
