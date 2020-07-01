@@ -19,8 +19,9 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   CONTAINER_IMAGE: eks-andre:${{ github.sha }}
+  AWS_CLUSTER_NAME: eks-andre  
 
-jobs:
+jobs: 
   build-and-push:
     name: Build and deploy
     runs-on: ubuntu-latest
@@ -28,15 +29,7 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@master
-
-    - name: Install Kubectl
-      run: |
-        # Teste kubectl
-        #curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-        #chmod +x ./kubectl
-        #sudo mv ./kubectl /usr/local/bin/kubectl
-        kubectl version --client --short
-        
+              
     # Add steps here like linting, testing, minification, etc.
     - name: Setup ECR
       run: |
@@ -58,3 +51,5 @@ jobs:
        #run: |
         # # Push image to AWS ECR
          #docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE
+  - release:
+   
